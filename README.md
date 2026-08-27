@@ -86,33 +86,41 @@ A API retornará a previsão em formato JSON.
 
 ---
 
-## Exemplo de requisição e resposta da API
+## Exemplos de requisições (PowerShell e curl)
 
-### Requisição
+Antes de testar, inicie a API a partir da pasta `deploy_ml`:
 
-```http
-POST /predict
-Content-Type: application/json
+```powershell
+cd D:\cp4\deploy_ml\CP4-Deploy-ML-Flask\deploy_ml
+python .\inference.py
 ```
 
-```json
-[
-  {
-    "feature_1": 10.5,
-    "feature_2": 3.2,
-    "feature_3": 7.8
-  }
-]
-```
+A seguir há cinco exemplos em uma linha para chamar `POST /predict`.
 
-> O exemplo será atualizado com os atributos reais do dataset utilizado.
+- Exemplo 1 — amostra única (vinho tinto) em PowerShell:
+  ```powershell
+  Invoke-RestMethod -Uri 'http://127.0.0.1:8000/predict' -Method Post -ContentType 'application/json' -Body '{"fixed acidity":7.4,"volatile acidity":0.7,"citric acid":0,"residual sugar":1.9,"chlorides":0.076,"free sulfur dioxide":11,"total sulfur dioxide":34,"density":0.9978,"pH":3.51,"sulphates":0.56,"alcohol":9.4,"type":"red"}'
+  ```
 
-### Resposta
+- Exemplo 2 — amostra única (vinho branco) em PowerShell:
+  ```powershell
+  Invoke-RestMethod -Uri 'http://127.0.0.1:8000/predict' -Method Post -ContentType 'application/json' -Body '{"fixed acidity":6.8,"volatile acidity":0.30,"citric acid":0.34,"residual sugar":2.5,"chlorides":0.045,"free sulfur dioxide":15,"total sulfur dioxide":54,"density":0.9937,"pH":3.20,"sulphates":0.65,"alcohol":11.0,"type":"white"}'
+  ```
 
-```json
-{
-  "predicao": [
-    "resultado"
-  ]
-}
-```
+- Exemplo 3 — duas amostras (array) em PowerShell:
+  ```powershell
+  Invoke-RestMethod -Uri 'http://127.0.0.1:8000/predict' -Method Post -ContentType 'application/json' -Body '[{"fixed acidity":7.4,"volatile acidity":0.7,"citric acid":0,"residual sugar":1.9,"chlorides":0.076,"free sulfur dioxide":11,"total sulfur dioxide":34,"density":0.9978,"pH":3.51,"sulphates":0.56,"alcohol":9.4,"type":"red"},{"fixed acidity":6.8,"volatile acidity":0.30,"citric acid":0.34,"residual sugar":2.5,"chlorides":0.045,"free sulfur dioxide":15,"total sulfur dioxide":54,"density":0.9937,"pH":3.20,"sulphates":0.65,"alcohol":11.0,"type":"white"}]'
+  ```
+
+- Exemplo 4 — ler JSON de arquivo e enviar (PowerShell):
+  ```powershell
+  '{"fixed acidity":7.4,"volatile acidity":0.7,"citric acid":0,"residual sugar":1.9,"chlorides":0.076,"free sulfur dioxide":11,"total sulfur dioxide":34,"density":0.9978,"pH":3.51,"sulphates":0.56,"alcohol":9.4,"type":"red"}' > .\sample.json
+  Invoke-RestMethod -Uri 'http://127.0.0.1:8000/predict' -Method Post -ContentType 'application/json' -InFile .\sample.json
+  ```
+
+- Exemplo 5 — usar `curl.exe` no Windows (escapar aspas):
+  ```powershell
+  curl.exe -s -X POST "http://127.0.0.1:8000/predict" -H "Content-Type: application/json" -d "{\"fixed acidity\":7.4,\"volatile acidity\":0.7,\"citric acid\":0,\"residual sugar\":1.9,\"chlorides\":0.076,\"free sulfur dioxide\":11,\"total sulfur dioxide\":34,\"density\":0.9978,\"pH\":3.51,\"sulphates\":0.56,\"alcohol\":9.4,\"type\":\"red\"}"
+  ```
+
+Se preferir, copie os exemplos para o Postman ou outra ferramenta de API. A resposta da API é JSON com a chave `prediction` e, quando disponível, `probabilities`.
