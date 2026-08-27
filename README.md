@@ -10,11 +10,11 @@ O modelo é treinado utilizando um dataset público e posteriormente salvo em um
 
 ## Dataset utilizado
 
-**Dataset:** `TODO`
+**Dataset:** Wine Quality
 
-**Fonte:** `TODO — Kaggle / UCI Machine Learning Repository`
+**Fonte:** Kaggle / UCI Machine Learning Repository
 
-**Link:** `TODO`
+**Link:** https://www.kaggle.com/datasets/rajyellow46/wine-quality?resource=download
 
 ---
 
@@ -31,25 +31,13 @@ O modelo utiliza as características fornecidas na entrada para prever o valor d
 Clone o repositório:
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/GusCrevelari/CP4-Deploy-ML-Flask
 ```
 
 Entre na pasta do projeto:
 
 ```bash
-cd NOME_DO_REPOSITORIO
-```
-
-Crie um ambiente virtual:
-
-```bash
-python -m venv .venv
-```
-
-No Windows, ative o ambiente:
-
-```bash
-.venv\Scripts\activate
+cd CP4-Deploy-ML-Flask
 ```
 
 Instale as dependências:
