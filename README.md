@@ -1,10 +1,24 @@
 # Projeto de Deploy de Machine Learning
 
+## Integrantes
+
+| RM | Nome |
+|---|---|
+| RM561408 | Gustavo Crevelari Monteiro Porto |
+| RM561996 | Lucca de Araujo Gomes |
+| RM561671 | Rafaela Ferreira Santos |
+| RM566224 | Victor Sabelli Rocha Batista |
+
 ## Descrição do problema
 
-Este projeto tem como objetivo disponibilizar um modelo de Machine Learning por meio de uma API HTTP.
+Este projeto implementa uma API para disponibilizar um modelo de classificação de qualidade de vinhos. A tarefa de negócio
+é transformar medições físico-químicas (por exemplo, acidez, teor alcoólico, sulfatos, densidade etc.) em uma predição
+simples sobre a qualidade do produto: o modelo produz um rótulo binário `quality_label` indicando se o vinho é
+considerado de qualidade 'boa' (1) ou 'não tão boa' (0).
 
-O modelo é treinado utilizando um dataset público e posteriormente salvo em um arquivo `.pkl`. A API desenvolvida em Python carrega esse modelo e recebe novos dados por meio de requisições HTTP, retornando a previsão realizada em formato JSON.
+O objetivo é demonstrar um fluxo completo de deploy: treinar um modelo com um dataset público, salvar o artefato em disco
+(arquivo `.pkl`/`.joblib`) e expô‑lo por meio de uma API REST feita em Python/Flask. A API recebe um JSON com as características
+do vinho, aplica o pré‑processamento mínimo necessário e retorna a predição em JSON.
 
 ---
 
@@ -16,13 +30,18 @@ O modelo é treinado utilizando um dataset público e posteriormente salvo em um
 
 **Link:** https://www.kaggle.com/datasets/rajyellow46/wine-quality?resource=download
 
----
+
+## Notebook utilizado
+
+**Notebook:** deploy_ml\CP4_IoT.ipynb
 
 ## Variável que está sendo prevista
 
-**Variável alvo:** `TODO`
+**Variável alvo:** `quality_label` — rótulo binário de qualidade do vinho
 
-O modelo utiliza as características fornecidas na entrada para prever o valor da variável alvo definida durante o treinamento.
+O modelo utiliza as características fornecidas na entrada para prever uma versão binária da coluna `quality` do dataset original.
+Foi criada a coluna `quality_label` onde `1` indica vinho de qualidade considerada boa (nota >= 6) e
+`0` indica vinho de qualidade considerada não tão boa (nota <= 5).
 
 ---
 
@@ -85,6 +104,30 @@ No Postman:
 A API retornará a previsão em formato JSON.
 
 ---
+
+### JSON de exemplo para Postman
+
+Cole o JSON abaixo em **Body → raw → JSON** no Postman e clique em `Send`.
+
+```json
+[
+  {
+    "type": "white",
+    "fixed acidity": 7.2,
+    "volatile acidity": 0.24,
+    "citric acid": 0.30,
+    "residual sugar": 1.6,
+    "chlorides": 0.048,
+    "free sulfur dioxide": 27.0,
+    "total sulfur dioxide": 131.0,
+    "density": 0.9933,
+    "pH": 3.25,
+    "sulphates": 0.45,
+    "alcohol": 10.5
+  }
+]
+```
+
 
 ## Exemplos de requisições (PowerShell e curl)
 
